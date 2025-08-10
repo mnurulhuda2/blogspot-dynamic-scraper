@@ -1,0 +1,16 @@
+{
+  "name": "dynamic-scraper",
+  "version": "1.0.0",
+  "description": "Puppeteer scraper for dynamic websites",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "puppeteer": "^21.0.0"
+  },
+  "engines": {
+    "node": "18.x"
+  }
+}
