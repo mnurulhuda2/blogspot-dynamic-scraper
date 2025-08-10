@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <base target="_top">
+  <title>Scraper Hybrid</title>
+  <style>
+    body { font-family: sans-serif; margin: 40px; max-width: 800px; }
+    input, button { padding: 12px; font-size: 16px; width: 100%; margin: 10px 0; }
+    button { background: #1a73e8; color: white; border: none; cursor: pointer; }
+    button:hover { background: #0d47a1; }
+    #result { margin-top: 20px; padding: 15px; background: #f0f0f0; border-radius: 5px; }
+  </style>
+</head>
+<body>
+  <h1>🌐 Hybrid Scraper</h1>
+  <p>Cari artikel dari Blogspot, Medium, dan website dinamis.</p>
+  <input id="keyword" type="text" placeholder="Masukkan kata kunci...">
+  <button onclick="scrape()">🔍 Cari Artikel</button>
+  <div id="result"></div>
+
+  <script>
+    function scrape() {
+      const k = document.getElementById('keyword').value.trim();
+      if (!k) return alert('Isi kata kunci!');
+      document.getElementById('result').innerHTML = 'Mencari...';
+      google.script.run
+        .withSuccessHandler(show)
+        .withFailureHandler(err)
+        .scrapeBlogspot(k);
+    }
+    function show(res) {
+      let html = `<p><b>✅ Ditemukan ${res.found} artikel</b></p>`;
+      res.results.forEach(r => {
+        html += `<hr><b>${r[1]}</b><br><a href="${r[2]}" target="_blank">${r[2]}</a>`;
+      });
+      document.getElementById('result').innerHTML = html;
+    }
+    function err(e) {
+      document.getElementById('result').innerHTML = `<p style="color:red">❌ ${e}</p>`;
+    }
+  </script>
+</body>
+</html>
